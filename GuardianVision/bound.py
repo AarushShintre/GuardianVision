@@ -2,6 +2,9 @@ import numpy as np
 import cv2
 import glob
 import csv
+from constants import *
+
+print(VIDEO_PATH)
 
 def calculate_center(x, y, w, h):
     return (int(x + w/2), int(y + h/2))
@@ -33,8 +36,7 @@ def save_person_dict_to_csv(person_dict):
     print(f"Data saved to person_tracking.csv")
 
 def process_video():
-    video_path = r"C:\code\hackathon24\SPHAR-Dataset\videos\kicking\bitint_kick_0001.mp4"
-    cap = cv2.VideoCapture(video_path)
+    cap = cv2.VideoCapture(VIDEO_PATH)
     fps = int(cap.get(cv2.CAP_PROP_FPS))
 
     # Get video dimensions for full video output
