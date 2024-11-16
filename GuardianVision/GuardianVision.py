@@ -15,9 +15,7 @@ if uploaded_file is not None:
     st.success("File uploaded successfully!")
     st.write("### File Details:")
     st.write(f"**Filename:** {uploaded_file.name}")
-    st.write(f"**File Type:** {uploaded_file.type}")
-    st.write(f"**File Size:** {uploaded_file.size / 1024:.2f} KB")
-    
+
     st.video(uploaded_file)
 
 else:
