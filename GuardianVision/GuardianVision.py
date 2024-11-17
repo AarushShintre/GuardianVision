@@ -1,4 +1,5 @@
 import streamlit as st
+import subprocess
 
 st.set_page_config(
     page_title="GuardianVision",
@@ -9,39 +10,10 @@ st.set_page_config(
 # Sidebar Title at the Top
 st.sidebar.header("Navigate")
 
-# CSS for Styling Clickable Rectangles
+# CSS for Styling
 st.markdown("""
     <style>
-        /* Sidebar Styling */
-        .sidebar-tabs {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .sidebar-tab {
-            padding: 15px;
-            background-color: #333333;
-            color: #ffffff;
-            border-radius: 5px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-
-        .sidebar-tab:hover {
-            background-color: #444444;
-        }
-
-        .sidebar-tab-selected {
-            background-color: #4da6ff;
-        }
-
-        .sidebar-tab:active {
-            background-color: #005f99;
-        }
+        /* Add your custom CSS styles here */
     </style>
 """, unsafe_allow_html=True)
 
@@ -56,9 +28,28 @@ def render_tab_content(selected_tab):
             st.write("### File Details:")
             st.write(f"**Filename:** {uploaded_file.name}")
             st.video(uploaded_file)
+
+            # Enable the "Train" button only if a file is uploaded
+            train_button_enabled = True
         else:
             st.info("Please upload an MP4 file to continue.")
-    
+            train_button_enabled = False
+
+        # "Train" Button
+        if st.button("Train Model", disabled=not train_button_enabled):
+            st.write("Training model... Please wait.")
+            try:
+                # Call the train_model.py script using subprocess
+                result = subprocess.run(
+                    ["python", "train_model.py"], capture_output=True, text=True
+                )
+                if result.returncode == 0:
+                    st.success("Model training completed successfully!")
+                else:
+                    st.error(f"Error during training: {result.stderr}")
+            except Exception as e:
+                st.error(f"Failed to train the model: {e}")
+
     elif selected_tab == "Instructions":
         st.write(
             """
@@ -69,52 +60,7 @@ def render_tab_content(selected_tab):
             """
         )
 
-    elif selected_tab == "About":
-        st.write(
-            """
-            ### About GuardianVision:
-            GuardianVision is a video preview tool that allows users to upload MP4 files and 
-            view them in a dark-themed interface. Enjoy a seamless video experience!
-            """
-
-        )
-
-    elif selected_tab == "Features":
-        st.write(
-            """
-            ### Features of GuardianVision:
-            - Easy MP4 file upload and preview.
-            - Fast loading of video previews.
-            - Simple, intuitive user interface.
-            - Dark-themed design for a comfortable viewing experience.
-            """
-        )
-
-    elif selected_tab == "Contact":
-        st.write(
-            """
-            ### Contact Us:
-            If you have any questions or feedback, feel free to reach out to us at:
-            - Email: support@guardiavision.com
-            - Phone: +1-800-123-4567
-            """
-        )
-
-    elif selected_tab == "FAQ":
-        st.write(
-            """
-            ### Frequently Asked Questions:
-            **Q: What file formats are supported?**  
-            A: We currently support MP4 files.
-
-            **Q: How large can my file be?**  
-            A: The maximum file size is 200MB.
-
-            **Q: How do I upload my file?**  
-            A: Simply click the 'Choose an MP4 file' button and select your file.
-            """
-        )
-
+    # Add other tabs and content here...
 
 # Create clickable tabs using buttons (styled as rectangles)
 tabs = ["File Upload", "Instructions", "About", "Features", "Contact", "FAQ"]
