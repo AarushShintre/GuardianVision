@@ -4,7 +4,7 @@ data:
     height: 256
     width: 256
   # ABSOLUTE path to data directory
-  data_dir: 
+  data_dir: /home/zeus/content/data/mirror-mouse
   # ABSOLUTE path to unlabeled videos' directory
   video_dir: /home/zeus/content/data/mirror-mouse/videos
   # location of labels; for example script, this should be relative to `data_dir`

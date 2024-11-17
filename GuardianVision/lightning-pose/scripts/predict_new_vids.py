@@ -22,7 +22,7 @@ from lightning_pose.utils.scripts import (
 )
 
 
-@hydra.main(config_path="configs", config_name="config_mirror-mouse-example")
+@hydra.main(config_path="configs", config_name="config")
 def predict_videos_in_dir(cfg: DictConfig):
     """
     This script will work with a path to a trained model's hydra folder
