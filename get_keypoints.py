@@ -1,0 +1,3 @@
+from lightning_pose.utils.script import export_predictions_and_labeled_video
+
+# call the export_predictions_and_labeled_video
