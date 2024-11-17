@@ -29,7 +29,7 @@ class SimpleActionClassifier(nn.Module):
         return self.model(x)
 
 # Prepare dataset
-dataset = SemiSupervisedDataset(annotated_data, transform=transform)
+dataset = predict_keypoints() #get the LP keypoints here
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 
 # Initialize model
